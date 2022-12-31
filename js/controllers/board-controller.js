@@ -8,6 +8,7 @@ let gIsX = Math.random >= 0.5 ? true : false
 let gTurnIdx = 0
 
 function onCellClick(elCell, i, j) {
+    if (getIsWin) return
     const pos = { i, j }
     const cell = getCell(pos)
     if (cell) return
@@ -16,9 +17,14 @@ function onCellClick(elCell, i, j) {
     setMoves(pos, sign)
     renderCell(elCell, sign)
     if (gTurnIdx >= (gGame.size * 2) - 2) checkWin(sign)
+    if (getIsWin()) return onWin(sign)
     gIsX = !gIsX
     gTurnIdx++
     if (gTurnIdx === gGame.size ** 2) onGameOver()
+}
+
+function onWin(sign) {
+    alert(`${sign} wins !`)
 }
 
 function onGameOver() {
